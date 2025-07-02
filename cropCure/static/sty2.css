@@ -1,0 +1,75 @@
+.crop-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin: 20px;
+  }
+  
+  .crop-card {
+    text-align: center;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 10px;
+    width: 150px;
+    transition: transform 0.3s;
+  }
+  
+  .crop-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .crop-card img {
+    width: 100%;
+    border-radius: 10px;
+  }
+  
+  .crop-card p {
+    margin: 10px 0 0;
+    font-size: 1.1em;
+  }
+  
+
+
+  .disease-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    align-items: center; /* Ensures vertical alignment of items */
+    margin: 20px;
+  }
+  
+  
+  .disease-card {
+    text-align: center;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 10px;
+    width: 150px;
+    transition: transform 0.3s;
+  }
+
+  
+  
+  .disease-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .disease-card img {
+    width: 100%;
+    border-radius: 10px;
+  }
+  
+  .disease-card p {
+    margin: 10px 0 0;
+    font-size: 1.1em;
+  }
+  .p {
+  text-align: center;
+  }
+  .h3 {
+  text-align: center;
+  margin-top: 20px;
+  font-weight: bold;
+  }

@@ -1,0 +1,30 @@
+{%comment%}{% extends 'cropCure/index.html' %}{%endcomment%}
+<div style="padding: 10px 20px; text-align: center;">
+    <a href="{% url 'index' %}" style="
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #4CAF50;  /* Green background */
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        border: none;
+        box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+    ">
+        Back To Home Page
+    </a>
+</div>
+
+<h2>Your Detection History</h2>
+{% for record in history %}
+  <div style="margin-bottom: 20px; border: 1px solid #ccc; padding: 10px;">
+    <img src="{{ record.uploaded_image.url }}" width="200"> <br>
+    <strong>Disease:</strong> {{ record.disease_name }}<br>
+    <strong>Confidence:</strong> {{ record.confidence }}<br>
+    <strong>Symptoms:</strong> {{ record.symptoms }}<br>
+    <strong>Treatment:</strong> {{ record.treatment }}<br>
+    {%comment%}<strong>Date:</strong> {{ record.detected_at }}{%endcomment%}
+  </div>
+{% empty %}
+  <p>No history found.</p>
+{% endfor %}

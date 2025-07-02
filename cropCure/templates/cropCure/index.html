@@ -1,0 +1,592 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Disease Detection</title>
+    <link rel="stylesheet" href="/static/style.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+
+</head>
+<body>
+ 
+    <!-- Navbar -->
+<nav>
+    <ul style="display: flex;  align-items: center;">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#upload">Upload</a></li>
+        <li><a href="#crop_disease">Detail</a></li>
+        <li><a href="#Plant_Disease_Info">PDT</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+
+        <!-- Hamburger Button -->
+        <li style="margin-left:auto;">
+            <button onclick="toggleMenu()" style="font-size: 24px; background: none; border: none; cursor: pointer;">
+                &#9776;
+            </button>
+        </li>
+    </ul>
+</nav>
+
+<!-- Side Panel -->
+<div id="sideMenu" style="
+    height: 100vh;
+    width: 0;
+    position: fixed;
+    top: 0;
+    right: 0;
+    background-color: #f1f1f1;
+    overflow-x: hidden;
+    transition: 0.3s;
+    padding-top: 60px;
+    z-index: 1000;
+    box-shadow: -2px 0 5px rgba(0,0,0,0.3);
+">
+
+    <!-- Close Button -->
+    <a href="javascript:void(0)" onclick="toggleMenu()" style="
+        position: absolute;
+        top: 10px;
+        right: 25px;
+        font-size: 30px;
+        text-decoration: none;
+        color: black;
+    ">&times;</a>
+    <div class="welcome-container">
+     <h2><i class="fas fa-user-circle"></i><span>{{ user.username }}</span></h2>
+    </div>
+    <!-- History -->
+    <div style="padding: 10px 20px;">
+        <a href="{% url 'history' %}"style="text-decoration: none; color: #333;">🕓 History</a>
+    </div>
+
+    <!-- Logout Form -->
+    <div style="padding: 10px 20px;">
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit" style="cursor: pointer;"> Logout</button>
+        </form>
+    </div>
+
+    <!-- Google Translate -->
+    <div style="padding: 10px 20px;">
+        <div id="google_translate_element"></div>
+    </div>
+</div>
+
+<!-- JavaScript -->
+<script>
+function toggleMenu() {
+    const menu = document.getElementById("sideMenu");
+    menu.style.width = menu.style.width === "250px" ? "0" : "250px";
+}
+</script>
+
+    
+    <div id="google_translate_element"></div>
+    <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+      }
+    </script>
+    
+    <script type="text/javascript"
+      src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+    </script>
+    <section id="home" class="home-section">
+        <h1><b>Welcome To Crop Disease Detection</b></h1>
+        <p>"Protect your crops by identifying diseases early — choose, detect, and explore effective solutions."
+        </p> 
+    </section>
+     {% comment %}<section id="upload">
+        <h1>Upload a leaf, let us diagnose!</h1>
+        <p>Upload an image of your plant, and our system will analyze it for possible diseases.
+            You’ll get detailed symptoms and recommended treatments.
+        </p>
+        {% comment %} <form id="uploadForm">
+            <input type="file" id="cropImage" accept="image/*" style="display: none;"> <!-- Hide the file input -->
+            <button type="button" onclick="openFileSelector()">Upload</button> <!-- Button triggers file selector -->
+        </form> 
+        <form id="uploadForm" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" id="cropImage" accept="image/*" style="display: none;">
+            <button type="button" onclick="openFileSelector()">Upload</button>
+        </form>
+        <section id="result">
+            <img id="previewImage" style="max-width: 300px; display: none; margin-top: 10px;margin-left:550px" />
+            <p id="uploadMessage"></p>
+            
+        </section>
+        <section id="diseaseImages"></section>
+
+    </section> {% endcomment %}
+    <section id="upload">
+        <h1>Upload a leaf, let us diagnose!</h1>
+        <p>
+          Upload an image of your plant, and our system will analyze it for possible diseases.
+          You’ll get detailed symptoms and recommended treatments.
+        </p>
+      
+        <!-- ✅ Upload button and preview image OUTSIDE the flex layout -->
+        <div class="upload-top">
+          <form id="uploadForm" enctype="multipart/form-data" method="POST">
+            {% csrf_token %}
+            <input type="file" id="cropImage" name="leaf_image" accept="image/*" style="display: none;">
+            <button type="button" onclick="openFileSelector()">Upload</button>
+          </form>
+          <img id="previewImage">
+        </div>
+      
+        <!-- ✅ A BOX START: Two sub-boxes only -->
+        <div class="upload-content">
+          <!-- Sub-box 1: Upload Message -->
+          <div class="upload-box" id="uploadMessage">
+            <!-- JS will populate this -->
+          </div>
+      
+          <!-- Sub-box 2: Similar Disease Images -->
+          <div class="upload-box" id="diseaseImages">
+            <!-- JS will populate this -->
+              
+          </div>
+        </div>
+        <!-- ✅ A BOX END -->
+    </section>
+    <section id="crop_disease">
+      <link rel="stylesheet" href="/static/sty2.css">
+        <h3 style="text-align: center; font-weight: bold;">Check the plant which types of possible disease occur</h3>
+            <div class="crop-grid">
+              <div class="crop-card">
+                <a href="/diseases/?crop=Apple">
+                  <img src="{% static '1.JPG' %}" alt="Apple">
+                  <p>Apple</p>
+                </a>
+              </div>
+            
+              <div class="crop-card">
+                <a href="/diseases/?crop=Blueberry">
+                  <img src="{% static '2.JPG' %}" alt="Blueberry">
+                  <p>Blueberry</p>
+                </a>
+              </div>
+              <div class="crop-card">
+                <a href="/diseases/?crop=Cherry">
+                  <img src="{% static '3.JPG' %}" alt="Cherry">
+                  <p>Cherry</p>
+                </a>
+              </div>
+              <div class="crop-card">
+                <a href="/diseases/?crop=Corn">
+                  <img src="{% static 'corrn.jpg' %}" alt="Corn">
+                  <p>Corn</p>
+                </a>
+              </div>
+              <div class="crop-card">
+                <a href="/diseases/?crop=Grape">
+                  <img src="{% static '5.JPG' %}" alt="Grape">
+                  <p>Grape</p>
+                </a>
+              </div>
+              <div class="crop-card">
+                <a href="/diseases/?crop=Orange">
+                  <img src="{% static '6.JPG' %}" alt="Orange">
+                  <p>Orange</p>
+                </a>
+              </div>
+              <div class="crop-card">
+                <a href="/diseases/?crop=Peach">
+                  <img src="{% static '7.JPG' %}" alt="Peach">
+                  <p>Peach</p>
+                </a>
+              </div>
+              <div class="crop-card">
+                <a href="/diseases/?crop=Pepper">
+                  <img src="{% static '8.JPG' %}" alt="Pepper">
+                  <p>Pepper</p>
+                </a>
+              </div>
+              <div class="crop-card">
+                <a href="/diseases/?crop=Raspberry">
+                  <img src="{% static '9.JPG' %}" alt="Raspberry">
+                  <p>Raspberry</p>
+                </a>
+              </div>
+              <div class="crop-card">
+                <a href="/diseases/?crop=Soyabean">
+                  <img src="{% static '10.JPG' %}" alt="Soyabean">
+                  <p>Soyabean</p>
+                </a>
+              </div>
+              <div class="crop-card">
+                <a href="/diseases/?crop=Straberry">
+                  <img src="{% static 'straberry.JPG' %}" alt="Straberry">
+                  <p>Strawberry</p>
+                </a>
+              </div>
+              <div class="crop-card">
+                <a href="/diseases/?crop=Tomato">
+                  <img src="{% static 'tomato.JPG' %}" alt="Tomato">
+                  <p>Tomato</p>
+                </a>
+              </div>
+              <div class="crop-card">
+                <a href="/diseases/?crop=Potato">
+                  <img src="{% static 'Potato.jpg' %}" alt="Potato">
+                  <p>Potato</p>
+                </a>
+              </div>
+              <div class="crop-card">
+                <a href="/diseases/?crop=Cucumber">
+                  <img src="{% static 'Cucumber.jpg' %}" alt="Cucumber">
+                  <p>Cucumber</p>
+                </a>
+              </div>
+            </div>
+      
+    </section>
+   
+   <section id="Plant_Disease_Info">
+  
+  <style>
+    body {
+      background-color: #f8fff8;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      width: 95%;
+      max-width: 1000px;
+      margin: 50px auto;
+      background: #ffffff;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .container h1 {
+      text-align: center;
+      color: #2e8b57;
+      margin-bottom: 30px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    table thead {
+      background-color: #2e8b57;
+      color: white;
+    }
+
+    table th, table td {
+      border: 1px solid #ccc;
+      padding: 12px;
+      text-align: left;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f0f9f4;
+    }
+  </style>
+</head>
+
+  <div class="container">
+    <h1>🌿 Plant Disease & Treatment List</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Sr No.</th>
+      <th>Plant Name</th>
+      <th>Disease</th>
+      <th>Treatment</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Apple</td>
+      <td>Apple Scab</td>
+      <td>
+        <ul>
+          <li>Plant resistant varieties</li>
+          <li>Apply fungicides during leaf emergence</li>
+          <li>Remove fallen leaves and fruit</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Apple</td>
+      <td>Black Rot</td>
+      <td>
+        <ul>
+          <li>Prune infected limbs and fruit</li>
+          <li>Apply copper-based fungicide</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Apple</td>
+      <td>Cedar Apple Rust</td>
+      <td>
+        <ul>
+          <li>Remove nearby juniper hosts</li>
+          <li>Use sterol-inhibiting fungicides</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Cherry</td>
+      <td>Powdery Mildew</td>
+      <td>
+        <ul>
+          <li>Apply fungicides from petal fall to harvest</li>
+          <li>Avoid excess nitrogen fertilization</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Corn</td>
+      <td>Gray Leaf Spot</td>
+      <td>
+        <ul>
+          <li>Plant resistant hybrids</li>
+          <li>Rotate crops</li>
+          <li>Apply foliar fungicides when necessary</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>Corn</td>
+      <td>Common Rust</td>
+      <td>
+        <ul>
+          <li>Plant resistant varieties</li>
+          <li>Use fungicides at early signs</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>Corn</td>
+      <td>Northern Leaf Blight</td>
+      <td>
+        <ul>
+          <li>Use resistant hybrids</li>
+          <li>Reduce residue via tillage</li>
+          <li>Apply fungicides as needed</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>Grape</td>
+      <td>Black Rot</td>
+      <td>
+        <ul>
+          <li>Remove infected fruit and leaves</li>
+          <li>Apply Captan or copper-based sprays</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>Grape</td>
+      <td>Esca (Black Measles)</td>
+      <td>
+        <ul>
+          <li>Remove infected vines</li>
+          <li>Protect pruning wounds</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>Orange</td>
+      <td>Citrus Greening</td>
+      <td>
+        <ul>
+          <li>Control psyllid insects</li>
+          <li>Use solar tents or heat treatment</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>11</td>
+      <td>Peach</td>
+      <td>Bacterial Spot</td>
+      <td>
+        <ul>
+          <li>Use copper bactericides</li>
+          <li>Avoid overhead irrigation</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>Pepper</td>
+      <td>Bacterial Leaf Spot</td>
+      <td>
+        <ul>
+          <li>Use certified disease-free seed</li>
+          <li>Apply copper sprays</li>
+          <li>Practice crop rotation</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>13</td>
+      <td>Potato</td>
+      <td>Early Blight</td>
+      <td>
+        <ul>
+          <li>Use fungicides like fluopyram</li>
+          <li>Maintain good nutrition and irrigation</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>14</td>
+      <td>Potato</td>
+      <td>Late Blight</td>
+      <td>
+        <ul>
+          <li>Use certified seed potatoes</li>
+          <li>Apply systemic fungicides before symptoms appear</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>Strawberry</td>
+      <td>Leaf Scorch</td>
+      <td>
+        <ul>
+          <li>Remove infected leaves</li>
+          <li>Apply fungicides during early bloom</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>16</td>
+      <td>Tomato</td>
+      <td>Early Blight</td>
+      <td>
+        <ul>
+          <li>Apply fungicides (e.g. chlorothalonil)</li>
+          <li>Remove infected foliage</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>17</td>
+      <td>Tomato</td>
+      <td>Leaf Mold</td>
+      <td>
+        <ul>
+          <li>Improve air circulation</li>
+          <li>Apply fungicides</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>18</td>
+      <td>Tomato</td>
+      <td>Septoria Leaf Spot</td>
+      <td>
+        <ul>
+          <li>Remove infected leaves</li>
+          <li>Apply fungicide in wet conditions</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>19</td>
+      <td>Tomato</td>
+      <td>Spider Mites</td>
+      <td>
+        <ul>
+          <li>Introduce predatory mites</li>
+          <li>Use miticides as needed</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>20</td>
+      <td>Tomato</td>
+      <td>Tomato Mosaic Virus</td>
+      <td>
+        <ul>
+          <li>Remove infected plants</li>
+          <li>Disinfect tools and hands</li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+  </div>
+</section>
+
+    
+       
+          
+    <section id="about">
+        <div class="about-section">
+            <div class="about-image">
+                <img src="/static/image.png" alt="Project image">
+            </div>
+            <div class="about-text">
+                <h2>About Us</h2>
+                <p  class="justify-text">
+                Our Crop Disease Detection platform is designed 
+                to help farmers quickly identify and address diseases 
+                affecting their crops. By uploading a picture of a plant, 
+                users can receive insights on potential diseases and guidance 
+                on treatment options. This tool empowers farmers with easy 
+                access to information, promoting healthier crops and sustainable
+                farming.Using our platform is simple: farmers can take a picture 
+                of their crops, upload it to the system, and within seconds, our 
+                AI model will analyze the image to identify any potential diseases.
+                The results include the disease name, symptoms, and possible treatments.
+                </p>
+            </div>
+        </div>
+    </section>
+    <section id="contact">
+        <h2>Contact Us</h2>
+    </section>
+    <footer>
+        <div class="footer-content">
+            <h2>Contact Us</h2>
+            <p>Email: cropcure@gmail.com</p>
+            <p>Phone: (862) 604-8783</p>
+            <p>“Preserving crops, preserving life.”</p>
+            <div class="social-links">
+                <a href="https://www.facebook.com" target="_blank">Facebook</a> |
+                <a href="https://www.linkedin.com/in/pooja-nagapurkar-b389ab238?lipi=urn%3Ali%3Apage%3Ad_flagship3_messaging_conversation_detail%3BB6WwFHrfQSiUTMflzl0MFA%3D%3D" target="_blank">Linkedin</a> |
+                <a href="https://www.instagram.com" target="_blank">Instagram</a>
+            </div>
+        </div>
+    </footer>
+    {% comment %} <script src="/static/script2.js"></script> {% endcomment %}
+    <script src="/static/script3.js"></script>
+</body>
+</html>
+
+
+

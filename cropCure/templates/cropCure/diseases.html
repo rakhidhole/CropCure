@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crop Diseases</title>
+  <link rel="stylesheet" href="/static/sty2.css">
+</head>
+<body>
+  
+  <h1 id="crop-name"style="text-align: center; font-weight: bold; font-color: #12dd41;">Crop Diseases</h1>
+  <div class="disease-grid" id="disease-list">
+    <!-- Diseases will be dynamically added here -->  
+  </div>
+  {% load static %}
+  <script>
+    // Get crop name from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const crop = urlParams.get('crop');
+
+    // Update page title
+    document.getElementById('crop-name').innerText = `${crop.charAt(0).toUpperCase() + crop.slice(1)} Diseases`;
+
+    // Diseases data
+    const diseasesData = {
+      Apple: [
+        { name: "Black Rot", image: "{% static '11.JPG' %}" },
+        { name: "Blight", image: "{% static '12.JPG' %}" },
+      ],
+      Blueberry: [
+        { name: "Scorch", image: "{% static 'scorch.jpg' %}" },
+        { name: "Blight", image: "{% static 'blight.jpg' %}" },
+      ],
+      Cherry: [
+        { name: "Powdery Mildew", image: "{% static 'pwmd.JPG' %}" },
+        { name: "cherry Powdery Mildew", image: "{% static 'c2.JPG' %}" },
+      ],
+      Corn: [
+        { name: "Common Rust", image: "{% static '4.JPG' %}" },
+        { name: "Corn Northern Leaf Blight", image: "{% static 'c3.JPG' %}" },
+      ],
+      Grape: [
+        { name: "Black Rot", image: "{% static 'black.JPG' %}"},
+        { name: "Black Measles", image: "{% static 'Black_miscle.JPG' %}"},
+      ],
+      Orange: [
+        { name: "Citrus", image: "{% static 'citrus.jpg' %}" },
+        { name: "Citrus Greening", image: "{% static 'cg.JPG' %}" },
+      ],
+      Peach: [
+        { name: "Bactorial Spot", image: "{% static 'Peachb.JPG' %}" },
+        { name: "Spot", image: "{% static 'pb.JPG' %}" },
+      ],
+
+      Pepper: [
+        { name: "Frogeye", image: "{% static 'frogeye.jpg' %}" },
+        { name: "Pepper bell", image: "{% static 'b.jpg' %}" },
+      ],
+      Raspberry: [
+        { name: "Bushy Dwarf Virus", image: "{% static 'r.jpg' %}" },
+        { name: "Leaf Rust", image: "{% static 'rr.jpg' %}" },
+      ],
+      Soyabean: [
+        { name: "Foliar", image: "{% static 'fliar.jpg' %}" },
+        { name: "Frogeye", image: "{% static 'frogeye.jpg' %}" },
+      ],
+      Straberry: [
+        { name: "Leaf Scorch", image: "{% static 'LS.JPG' %}" },
+        { name: "Frogeye", image: "{% static 'LS2.JPG' %}" },
+      ],
+      Tomato: [
+        { name: "Septoria", image: "{% static 'sept.JPG' %}" },
+        { name: "Leaf Mold", image: "{% static 'mold.JPG' %}" },
+      ],
+      
+      Potato: [
+        { name: "Late Blight", image: "{% static 'P_blight.JPG' %}" },
+        
+      ],
+      Cucumber: [
+        { name: "Septoria", image: "{% static 'squash_P_M.JPG' %}" },
+       
+      ],
+      
+
+
+
+    };
+
+    // Populate diseases
+    const diseaseList = document.getElementById('disease-list');
+    if (diseasesData[crop]) {
+      diseasesData[crop].forEach(disease => {
+        const diseaseCard = `
+          <div class="disease-card">
+            <img src="${disease.image}" alt="${disease.name}">
+            <p>${disease.name}</p>
+          </div>
+        `;
+        diseaseList.innerHTML += diseaseCard;
+      });
+    } else {
+      diseaseList.innerHTML = "<p>No diseases found for this crop.</p>";
+    }
+  </script>
+
+  <h3 style="text-align: center; font-weight: bold; font-color: #12dd41;"><a href="{% url 'index' %}#crop_disease">Go Back </a></h3>
+</body>
+</html>

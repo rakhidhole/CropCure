@@ -1,0 +1,342 @@
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  
+  padding-top: 70px;
+  box-sizing: border-box;
+}
+
+#home {
+  background-image: url('https://www.baltana.com/files/wallpapers-17/Plant-Background-HD-Wallpapers-44014.jpg');
+  /* Replace with your image URL */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white;
+  padding: 200px 30px;
+  margin: 0;
+  /* Add more padding for better spacing */
+  text-align: center;
+}
+
+.home-content {
+  background-color: rgba(0, 0, 0, 0.5);
+  /* Add a semi-transparent background for readability */
+  padding: 5px;
+  border-radius: 5px;
+  /* Rounded corners */
+}
+
+nav {
+  background-color: black;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  position: fixed;         /* Fix the navbar */
+  top: 0;                  /* Stick it to the top */
+  width: 100%;             /* Full width */
+  z-index: 1000; 
+ 
+}
+
+
+nav ul {
+  display: flex;
+  list-style: none;
+  /*justify-content: space-around;*/
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  gap: 20px;  
+}
+.welcome-container {
+    text-align: center;
+   
+    
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 5px;
+    margin: 5px;
+    border-radius: 2px;
+}
+
+.welcome-container h2 {
+    font-size: 30px;
+    font-weight: 700;
+    color: #000;  /* Black font */
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.welcome-container h2 i {
+    color: #4caf50;
+    margin-right: 10px;
+    font-size: 32px;
+    vertical-align: middle;
+}
+
+.welcome-container h2 span {
+    font-weight: 800;
+}
+
+
+nav a {
+  display: block;
+  width: 50px;
+  /* Fixed width for square shape */
+  height: 10px;
+  /* Fixed height for square shape */
+  color: #ffffff;
+  padding: 10px;
+  background-color: #000000;
+  /* Box background color */
+  text-decoration: none;
+  font-size: 16px;
+  text-align: center;
+  line-height: 5px;
+  /* Vertically center the text */
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  border-radius: 10px;
+  /* Optional: rounded corners */
+}
+
+
+/* Hover effect for color change and zoom */
+
+nav a:hover {
+  background-color: #f2f2f23d;
+  /* Change to a lighter shade on hover */
+  transform: scale(1.1);
+  /* Zoom in effect */
+}
+
+h1,
+h2 {
+  color: white;
+}
+
+.h3 {
+text-align: center;
+margin-top: 20px;
+font-weight: bold;
+}
+
+#upload {
+  background-image: url('upload.avif');
+  background-size: cover;
+  background-position: center;
+  padding: 40px;
+  border-radius: 8px;
+  max-width: 1500px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  color: #fff;
+}
+
+
+#upload {
+  background-image: url('upload.avif');
+  background-size: cover;
+  background-position: center;
+  padding: 40px;
+  border-radius: 8px;
+  max-width: 1500px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  color: #fff;
+}
+
+/* Upload section at the top */
+.upload-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+button {
+  background-color: #12dd41;
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: #213b18;
+}
+
+#previewImage {
+  max-width: 100%;
+  width: 200px;
+  height: auto;
+  margin-top: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  display: block;
+}
+
+/* Flex container for two sub-boxes */
+.upload-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+/* Shared styling for both sub-boxes */
+.upload-box {
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 20px;
+  border-radius: 10px;
+  flex: 1;
+  min-width: 280px;
+  max-width: 48%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/* Upload Message content */
+#uploadMessage {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-size: larger;
+}
+
+/* Result box inside uploadMessage */
+.result-box {
+  background-color: #2c2a2a;
+  color: #ffffff;
+  padding: 12px 16px;
+  border-radius: 6px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
+  text-align: left;
+  max-height: 120px;
+  overflow-y: auto;
+  font-size: 14px;
+  line-height: 1.4;
+  margin-bottom: 10px;
+  transition: transform 0.3s ease;
+}
+.result-box:hover {
+  transform: scale(1.03); /* ✅ zoom in slightly */
+}
+
+.result-title {
+  font-weight: bold;
+  font-size: 17px;
+  margin-bottom: 6px;
+  color: #28a745;
+}
+
+/* Disease sample grid */
+.disease-images {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 10px;
+  width: 100%;
+  height:100%;
+}
+
+.disease-sample {
+  width: 87%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+
+/* Hover Zoom In */
+.disease-sample:hover {
+  transform: scale(1.3); /* Zooms in by 20% */
+  z-index: 2;
+}
+
+
+
+/* Footer Styling */
+
+footer {
+  background-image: url('footer.png'), linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));
+  /* Set your background image here */
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: overlay;
+  padding: 50px 20px;
+  color: #fff;
+  text-align: center;
+}
+
+.footer-content h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.footer-content p {
+  font-size: 16px;
+  margin: 5px 0;
+}
+
+.footer-content .social-links a {
+  color: #fff;
+  margin: 0 10px;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.footer-content .social-links a:hover {
+  text-decoration: underline;
+}
+
+#contact {
+  text-align: center;
+}
+
+.about-section {
+  display: flex;
+  align-items: center;
+  max-width: 1500px;
+  max-height: 1000px;
+  height: auto;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.about-image img {
+  width: 300px;
+  height: cover;
+  border-right: 1px solid #ddd;
+}
+
+.about-text {
+  padding: 30px;
+}
+
+.about-text h2 {
+  color: #666600;
+  font-size: 24px;
+  margin-bottom: 15px;
+  align-items: center;
+}
+
+.about-text p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333;
+}
+
