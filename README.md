@@ -19,7 +19,6 @@
 - **Database**: SQLite3 (default Django DB)
 - **Tools**: Google Colab, Google Drive
 
-
 ## 📦 Installation
 
 ```bash
@@ -39,9 +38,7 @@ python manage.py migrate
 
 # Start the server
 python manage.py runserver
-
-
-
+  ```
 ---
 
 ## 🙋‍♀️ Authors
