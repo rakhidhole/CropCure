@@ -21,6 +21,15 @@
 
 ---
 
+## 📸 Output Screenshots
+
+### 🔍 Prediction Interface
+!(images/screenshot (109).png)
+!(images/screenshot (109).png)
+
+### 🧾 User History Page
+![History Page](images/screenshot (109).png)
+
 ## 📦 Installation
 
 ```bash
@@ -39,10 +48,13 @@ pip install -r requirements.txt
 python manage.py migrate
 
 # Start the server
-python manage.py runserver
+python manage.py runserver```
 
 
 ---
+
+
+
 
 ## 🙋‍♀️ Authors
 
