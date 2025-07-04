@@ -44,9 +44,6 @@ python manage.py runserver
 
 ---
 
-
-
-
 ## 🙋‍♀️ Authors
 
 - **Rakhi Dhole**  
