@@ -1,6 +1,5 @@
 # CropCure
-🌾 A Django-based web application that detects crop diseases from leaf images using a trained CNN model, and provides disease details, symptoms, and treatments. Includes user authentication, multilingual support, and prediction history tracking.
-
+🌾Crop diseases cause major losses for farmers, especially in rural areas where access to expert help is limited. This project, CropCure, is a web-based system that uses deep learning to detect plant diseases from leaf images. Built with Django and CNN, it provides quick disease identification, symptoms, and treatment tips. With multilingual support and a simple interface, CropCure empowers farmers to protect their crops, reduce losses, and promote smart, sustainable farming.
 ## 🚀 Features
 
 - 🖼️ Image Upload: Upload plant leaf images
@@ -43,15 +42,19 @@ python manage.py migrate
 python manage.py runserver
 
 
-## 📸 Output Screenshots
+---
 
-### 🔍 prediction images
-![Model Output](images/Screenshot (109).png)
-![Model Output](images/Screenshot (115).png)
-![Model Output](images/Screenshot (116).png)
+## 🙋‍♀️ Authors
 
-### 📊 Detection History
-![History Page](images/Screenshot (117).png)
+- **Rakhi Dhole**  
+  📧 [rakhidhole721@gmail.com](mailto:rakhidhole721@gmail.com)
+- **Purva Kurle**  
+  📧 [191.purvakurle@gmail.com](mailto:191.purvakurle@gmail.com)
+- **Pooja Nagapurkar**  
+  📧 [pooja713953@gmail.com](mailto:pooja713953@gmail.com)
+
+📍 Final Year,Computer Engineering, Dr.Babasaheb Ambedkar Technological University
+
 
 
 
